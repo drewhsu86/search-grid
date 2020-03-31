@@ -23,6 +23,7 @@ let mode = 'wall'
 let start = null
 let stop = null
 let hoverColor = 'lightblue'
+let wallColor = 'blue'
 
 
 // event listener
@@ -124,11 +125,16 @@ function bindGridBoxes() {
 
     // add event listeners to each box
     boxes[i].addEventListener("mouseover", () => {
-      boxes[i].style.backgroundColor = hoverColor
+      if (boxObjs[i].state === 'empty') {
+        boxes[i].style.backgroundColor = hoverColor
+      }
 
     })
     boxes[i].addEventListener("mouseout", () => {
-      boxes[i].style.backgroundColor = null
+
+      if (boxObjs[i].state === 'empty') {
+        boxes[i].style.backgroundColor = null
+      }
 
     })
 
@@ -139,6 +145,17 @@ function bindGridBoxes() {
         case 'wall':
           // if mode is wall, either add or remove a wall
           // reflect change in both element and object array
+
+          let thisBox = boxObjs[i]
+
+          if (thisBox.state === 'empty') {
+            thisBox.state = 'wall'
+            boxes[i].style.backgroundColor = wallColor
+          } else if (thisBox.state === 'wall') {
+            thisBox.state = 'empty'
+            boxes[i].style.backgroundColor = null;
+          }
+
           break
       }
     })
