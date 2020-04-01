@@ -16,16 +16,28 @@
 ​
 
 <body>
-
-  Grid Width
-  <input type="number" id="gridWidth" value="10">
-  <br>
-  Grid Length
-  <input type="number" id="gridHeight" value="10">
-  <br> <br>
-  Grid dimensions between 1 and 30
-  <br>
-  <button id='createGrid'> Create Grid </button>
+  <table class="controlsTable">
+    <tr>
+      <td class="controls">Grid Width
+        <input type="number" id="gridWidth" value="10">
+        <br>
+        Grid Length
+        <input type="number" id="gridHeight" value="10">
+        <br> <br>
+        Grid dimensions between 1 and 30
+        <br>
+        <button id='createGrid'> Create Grid </button>
+        <button id='mode'> Mode = Walls </button>
+        <button id='runSearch'> Run Search </button>
+      </td>
+      <td class="infoPanel">
+        System Messages:
+        <button id='clearMsg'> Clear </button>
+        <br>
+        <section id="systemMsg"></section>
+      </td>
+    </tr>
+  </table>
 
 
   <table class="mainGrid" id="mainGrid">

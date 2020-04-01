@@ -1,3 +1,35 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
+}
+
+
+.controlsTable {
+  background-color: lightgrey;
+}
+
+.controls, .infoPanel {
+  display: inline-block;
+  /* background-color: lightgrey; */
+  position: relative;
+  bottom: 0;
+  padding: 10px;
+}
+
+#systemMsg {
+  background-color: white;
+  border: 1px solid black;
+  width: 250px;
+  height: 90px;
+  overflow-y: scroll;
+  position: relative;
+  bottom: 0;
+}
+
+button {
+  font-size: 18px;
+}
+
 .mainGrid {
   border: 1px solid black;
 }
