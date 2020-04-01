@@ -3,6 +3,9 @@ body {
   font-size: 18px;
 }
 
+td {
+  padding: 10px;
+}
 
 .controlsTable {
   background-color: lightgrey;

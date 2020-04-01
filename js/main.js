@@ -30,6 +30,7 @@ window.onload = () => {
   let stop = null
   let gridWidthNum = 0;
   let gridHeightNum = 0;
+  let dbRadio = 'd'
   const maxDim = 20
   const hoverColor = 'lightblue'
   const wallColor = 'blue'
@@ -50,6 +51,16 @@ window.onload = () => {
       bindGridBoxes()
     }
   })
+
+  for (radioID of ['dbRadioD', 'dbRadioB']) {
+    const radioInput = document.getElementById(radioID)
+    radioInput.addEventListener("click", () => {
+      if (radioInput.checked) {
+        dbRadio = radioInput.value
+      }
+      console.log('dbRadio: ' + dbRadio)
+    })
+  }
 
   modeButton.addEventListener("click", () => {
     switch (mode) {
@@ -263,11 +274,19 @@ window.onload = () => {
     stop = null
     gridWidthNum = 0;
     gridHeightNum = 0;
+    modeButton.innerText = 'Mode = Walls'
   }
 
   // function runSearch which will start the algorithm
   // called by a particular function written outside
   function runSearch() {
+    // clear colors off of empty tiles
+    for (boxObj of boxObjs) {
+      if (boxObj.state === 'empty') {
+        boxObj.addBGColor(null)
+      }
+    }
+
     // check if search is feasible
     // start and stop need to be not null
     if (start === null || stop === null) {
@@ -276,7 +295,7 @@ window.onload = () => {
     } else {
       console.log('run search ready')
       printToMsg('Ready to run search.')
-      depthFirstSearch(start)
+      dbFirstSearch(start, dbRadio)
     }
 
 
@@ -321,7 +340,7 @@ window.onload = () => {
   // paint visited paths a light orange
   // paint chosen path a maroon (darkish desaturated color)
 
-  function depthFirstSearch(start) {
+  function dbFirstSearch(start, db) {
 
     // store visited on a new array
     let visited = new Array(gridWidthNum * gridHeightNum)
@@ -343,7 +362,7 @@ window.onload = () => {
 
       // we must determine what the neighbors are
       // we will only check one step in 4 cardinal directions
-      // and obviously not below 0 or above gridWidthNßum-1 or gridHeightNum-1
+      // and obviously not below 1 or above gridWidthNum or gridHeightNum
       // we can convert i into x and y or grab x or y from the object
       // then do math on x and y 
       let currItem = stack.shift()
@@ -380,7 +399,12 @@ window.onload = () => {
             node: boxObjs[ind],
             path: newPath
           }
-          stack.unshift(newItem)
+          // use stack as a queue if breath first search
+          if (db === 'd') {
+            stack.unshift(newItem)
+          } else if (db === 'b') {
+            stack.push(newItem)
+          }
           boxObjs[ind].addBGColor(searchedColor)
           visited[ind] = true
           console.log('new path added')
@@ -402,7 +426,12 @@ window.onload = () => {
             node: boxObjs[ind],
             path: newPath
           }
-          stack.unshift(newItem)
+          // use stack as a queue if breath first search
+          if (db === 'd') {
+            stack.unshift(newItem)
+          } else if (db === 'b') {
+            stack.push(newItem)
+          }
           boxObjs[ind].addBGColor(searchedColor)
           visited[ind] = true
           console.log('new path added')
